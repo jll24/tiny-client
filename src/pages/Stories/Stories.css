@@ -1,0 +1,34 @@
+@media (min-width: 375px) {
+  .date-paragraph,
+  .story-title,
+  .story-link,
+  .story-image-row-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .story-image-row-container img,
+  .story-content,
+  .clap-container {
+    margin-top: 20px;
+    margin-left: 20px;
+  }
+  .story-image-row-container,
+  .story-image-row-container img {
+    width: 100% !important;
+    position: relative;
+  }
+}
+
+.border-black {
+  border: 2px solid black;
+}
+/* Media Queries - Desktop View*/
+
+@media screen and (min-width: 1024) {
+  .story img {
+    width: 70% !important;
+  }
+}

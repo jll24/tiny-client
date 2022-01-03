@@ -1,0 +1,13 @@
+.border-black {
+  border: 2px solid black;
+}
+
+.username-link {
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+}
+
+.username-link:hover {
+  transition: 0.2s all ease;
+  color: rgb(255, 95, 74);
+}

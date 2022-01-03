@@ -1,0 +1,40 @@
+.clap:active,
+.disable-clap{
+    opacity: .3;
+}
+.profile{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.aboutme{
+    white-space: pre-wrap;
+    font-family: var(--bs-body-font-family);
+    font-size: 14px;
+    margin-bottom: -10px;
+    text-align: center;
+}
+.not-found{
+    width: 80%;
+    margin: auto;
+}
+
+/* Media Queries */
+@media screen and (min-width: 768px){
+    .profile{
+        display: inline-block;
+    } 
+    .aboutme{
+        text-align: start;
+    }
+    .not-found{
+        width: 80% !important
+    }
+}
+
+@media screen and (min-width: 1024px){
+    .not-found{
+        width: 50% !important
+    }
+}
