@@ -1,12 +1,12 @@
 const initialState = {
   settings: {
-    API_URL: "http://projecttiny.ap-1.evennode.com",
+    API_URL: "https://tiny-be.herokuapp.com",
     bypassLANCache: Date.now(), //I will use timestamp only to bypass if you have cache server inplace in local area network
     appName: "TINY",
   },
   loggedInUser: localStorage.getItem("loggedInUser")
     ? JSON.parse(localStorage.getItem("loggedInUser"))
-    : {}, //hold the current logged it user
+    : {}, //hold the current logged in user
   stories: [],
   storiesByID: [],
   users: [],
