@@ -3,7 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-import { Container, Row, Col, Button, Offcanvas, tr, td} from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Offcanvas,
+  tr,
+  td,
+} from "react-bootstrap";
 
 const MainProfile = () => {
   const dispatch = useDispatch();
@@ -31,11 +39,9 @@ const MainProfile = () => {
       setLoading(true);
       dispatch({ type: "LOAD_VIEWED_USER", payload: res.data.data });
       //Load Followers and Following
-      axios
-        .get(`${settings.API_URL}/${username}/follow`)
-        .then((res5) => {
-          dispatch({type: "LOAD_VIEWED_USER_FOLLOWS", payload: res5.data.data})
-        })
+      axios.get(`${settings.API_URL}/${username}/follow`).then((res5) => {
+        dispatch({ type: "LOAD_VIEWED_USER_FOLLOWS", payload: res5.data.data });
+      });
       //Load Updated loggedInUser
       axios
         .get(`${settings.API_URL}/profile/${loggedInUser.username}`)
@@ -92,11 +98,12 @@ const MainProfile = () => {
           dispatch({ type: "LOAD_VIEWED_USER", payload: res.data.data });
 
           //Reload Followers and Following
-            axios
-            .get(`${settings.API_URL}/${username}/follow`)
-            .then((res5) => {
-              dispatch({type: "LOAD_VIEWED_USER_FOLLOWS", payload: res5.data.data})
-            })
+          axios.get(`${settings.API_URL}/${username}/follow`).then((res5) => {
+            dispatch({
+              type: "LOAD_VIEWED_USER_FOLLOWS",
+              payload: res5.data.data,
+            });
+          });
 
           //Reload loggedInUser data
           axios
@@ -116,19 +123,20 @@ const MainProfile = () => {
     //Follow another user
     axios
       .put(
-        `http://projecttiny.ap-1.evennode.com/unfollow/${loggedInUser?._id}/${viewedUser?._id}`
+        `${settings.API_URL}/unfollow/${loggedInUser?._id}/${viewedUser?._id}`
       )
-      .then((res3) => {
+      .then((res) => {
         //Reload viewedUser data
         axios.get(`${settings.API_URL}/profile/${username}`).then((res) => {
           dispatch({ type: "LOAD_VIEWED_USER", payload: res.data.data });
-          
+
           //Reload Followers and Following
-          axios
-          .get(`${settings.API_URL}/${username}/follow`)
-          .then((res5) => {
-            dispatch({type: "LOAD_VIEWED_USER_FOLLOWS", payload: res5.data.data})
-          })
+          axios.get(`${settings.API_URL}/${username}/follow`).then((res5) => {
+            dispatch({
+              type: "LOAD_VIEWED_USER_FOLLOWS",
+              payload: res5.data.data,
+            });
+          });
 
           //Reload loggedInUser data
           axios
@@ -188,7 +196,7 @@ const MainProfile = () => {
                 <pre className="aboutme">
                   <p>{viewedUser?.aboutme}</p>
                 </pre>
-                
+
                 <div style={{ display: "flex" }}>
                   <p
                     onClick={handleShowFollower}
@@ -198,45 +206,49 @@ const MainProfile = () => {
                       lineHeight: "10px",
                       marginTop: "20px",
                       marginRight: "60px",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     {follows?.followers?.length}
                   </p>
 
-                  {/* OFFCANVAS FOR FOLLOWER */}    
-                <Offcanvas show={showFollower} onHide={handleCloseFollower}>
-                <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>{viewedUser?.firstname}'s followers:</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                  {
-                    follows?.followers?.map(follower => {
-                      return(
-                        <div style={{display: "block", marginBottom:"10px"}}>
-                          <Link to={`../profile/${follower.username}`} 
-                                style={{textDecoration:"none", color:"black"}}>
-                           <img
-                              src={follower.photo}
-                              alt="profile"
-                              className="profile-pic"
-                              style={{
-                                marginRight: "10px",
-                                width: "40px",
-                                height: "40px",
-                                borderRadius: "50%"
-                              }}
-                            />
-                            <span>
-                              {follower.firstname} {follower.lastname}
-                            </span>
-                          </Link>
-                        </div>
-                      )
-                    })
-                  }
-                </Offcanvas.Body>
-              </Offcanvas>
+                  {/* OFFCANVAS FOR FOLLOWER */}
+                  <Offcanvas show={showFollower} onHide={handleCloseFollower}>
+                    <Offcanvas.Header closeButton>
+                      <Offcanvas.Title>
+                        {viewedUser?.firstname}'s followers:
+                      </Offcanvas.Title>
+                    </Offcanvas.Header>
+                    <Offcanvas.Body>
+                      {follows?.followers?.map((follower) => {
+                        return (
+                          <div
+                            style={{ display: "block", marginBottom: "10px" }}
+                          >
+                            <Link
+                              to={`../profile/${follower.username}`}
+                              style={{ textDecoration: "none", color: "black" }}
+                            >
+                              <img
+                                src={follower.photo}
+                                alt="profile"
+                                className="profile-pic"
+                                style={{
+                                  marginRight: "10px",
+                                  width: "40px",
+                                  height: "40px",
+                                  borderRadius: "50%",
+                                }}
+                              />
+                              <span>
+                                {follower.firstname} {follower.lastname}
+                              </span>
+                            </Link>
+                          </div>
+                        );
+                      })}
+                    </Offcanvas.Body>
+                  </Offcanvas>
 
                   <p
                     onClick={handleShowFollowing}
@@ -246,26 +258,29 @@ const MainProfile = () => {
                       lineHeight: "10px",
                       marginTop: "20px",
                       marginLeft: "65px",
-                      cursor: "pointer"
+                      cursor: "pointer",
                     }}
                   >
                     {follows?.following?.length}
                   </p>
                 </div>
 
-                {/* OFFCANVAS FOR FOLLOWING */}    
+                {/* OFFCANVAS FOR FOLLOWING */}
                 <Offcanvas show={showFollowing} onHide={handleCloseFollowing}>
-                <Offcanvas.Header closeButton>
-                  <Offcanvas.Title>{viewedUser?.firstname} is following:</Offcanvas.Title>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                  {
-                    follows?.following?.map(following => {
-                      return(
-                        <div style={{display: "block", marginBottom:"10px"}}>
-                          <Link to={`../profile/${following.username}`} 
-                                style={{textDecoration:"none", color:"black"}}>
-                           <img
+                  <Offcanvas.Header closeButton>
+                    <Offcanvas.Title>
+                      {viewedUser?.firstname} is following:
+                    </Offcanvas.Title>
+                  </Offcanvas.Header>
+                  <Offcanvas.Body>
+                    {follows?.following?.map((following) => {
+                      return (
+                        <div style={{ display: "block", marginBottom: "10px" }}>
+                          <Link
+                            to={`../profile/${following.username}`}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            <img
                               src={following.photo}
                               alt="profile"
                               className="profile-pic"
@@ -273,7 +288,7 @@ const MainProfile = () => {
                                 marginRight: "10px",
                                 width: "40px",
                                 height: "40px",
-                                borderRadius: "50%"
+                                borderRadius: "50%",
                               }}
                             />
                             <span>
@@ -281,11 +296,10 @@ const MainProfile = () => {
                             </span>
                           </Link>
                         </div>
-                      )
-                    })
-                  }
-                </Offcanvas.Body>
-              </Offcanvas>
+                      );
+                    })}
+                  </Offcanvas.Body>
+                </Offcanvas>
 
                 <div style={{ display: "flex" }}>
                   <p style={{ lineHeight: "10px", marginRight: "40px" }}>
@@ -339,18 +353,18 @@ const MainProfile = () => {
           </Col>
           <Col className="col-md-9">
             <Container className="container-fluid stories-container d-flex flex-column justify-content-start">
-            <Row>
-              <h2
-                style={{
-                  textAlign: "center",
-                  color: "#1e3945",
-                  lineHeight: "50px",
-                }}
-              >
-                STORIES
-              </h2>
-              <hr style={{ backgroundColor: "#ff5f4a " }} />
-            </Row>
+              <Row>
+                <h2
+                  style={{
+                    textAlign: "center",
+                    color: "#1e3945",
+                    lineHeight: "50px",
+                  }}
+                >
+                  STORIES
+                </h2>
+                <hr style={{ backgroundColor: "#ff5f4a " }} />
+              </Row>
               {loadUserStories && viewedUserStories?.length === 0
                 ? loggedInUser?._id === viewedUser?._id
                   ? "You have no stories yet."
@@ -364,10 +378,10 @@ const MainProfile = () => {
                               __html: story.title,
                             }}
                           />
-                          <small style={{ color: "gray", marginBottom:"10px" }}>
-                            <em>
-                              {moment(story.createdAt).format("LL")}
-                            </em>
+                          <small
+                            style={{ color: "gray", marginBottom: "10px" }}
+                          >
+                            <em>{moment(story.createdAt).format("LL")}</em>
                           </small>
                         </Row>
                         <Row>
